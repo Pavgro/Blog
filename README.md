@@ -1,2 +1,2 @@
 # Blog
-Blog developed in oython with Flask and sqlite database.
+Blog that developed in python with Flask and sqlite database.

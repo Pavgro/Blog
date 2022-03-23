@@ -43,6 +43,35 @@ def read_post(id):
     return render_template("post-reading.html", article=article)
 
 
+@app.route('/posts/<int:id>/delete')
+def delete_post(id):
+    article = Article.query.get_or_404(id)
+    try:
+        db.session.delete(article)
+        db.session.commit()
+        return redirect('/posts')
+    except:
+        "an error occurred while deleting"
+
+
+@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+def update_post(id):
+    article = Article.query.get(id)
+    if request.method == 'POST':
+        article.title = request.form["Title"]
+        article.intro = request.form["intro"]
+        article.text = request.form["text"]
+
+        try:
+            db.session.commit()
+            return redirect('/posts')
+        except:
+            return "an error occurred while updating"
+    else:
+
+        return render_template("post-update.html", article=article)
+
+
 @app.route('/create-article', methods=['POST', 'GET'])
 def create_article():
     if request.method == 'POST':
